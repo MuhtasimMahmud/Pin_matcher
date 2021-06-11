@@ -1,0 +1,181 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="pin-display" class="form-control" type="text">
+                    <button id="generate-pin-btn" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="calc-display" class="form-control" type="text">
+                    <div  class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div id="7" class="button">7</div>
+                              <div id="8" class="button">8</div>
+                              <div id="9" class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div id="4" class="button">4</div>
+                              <div id="5" class="button">5</div>
+                              <div id="6" class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div id="1" class="button">1</div>
+                              <div id="2" class="button">2</div>
+                              <div id="3" class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div id="<" class="button"><</div>
+                                <div id="0" class="button">0</div>
+                                <div id="c" class="button">C</div>
+                                </div>
+                            <div>
+                                <button id="submitButton" type="submit" class="submit-btn">Submit</button>
+                                <p id="try" class="action-left"> <span id="try-left">3</span> try left</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notify-section">
+                    <p id="wrongPin" class="notify">❌ Pin Didn't Match, Please try again</p>
+                    <p id="rightPin" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+                </div>
+            </div>
+
+    <script>
+
+        var try_left = parseInt(document.getElementById("try-left").innerText);
+
+        //generating random number
+        var pin = "";
+        document.getElementById("generate-pin-btn").addEventListener("click", function(){
+            pin = parseInt(Math.random()*(9999-1000)+1000);
+            document.getElementById("pin-display").value = pin;
+            document.getElementById("submitButton").style.display = "inline";
+            try_left = 3;
+            document.getElementById("try").innerText = try_left+" try left";
+            document.getElementById("try").style.color = "red";
+            document.getElementById("wrongPin").style.display = "none";
+            document.getElementById("rightPin").style.display = "none";
+        });
+
+        // displaying the calculator numbers
+        var calc_display = "";
+        function numberButton(number){
+            calc_display = calc_display + number;
+            document.getElementById("calc-display").value = parseInt(calc_display);
+        }
+
+        document.getElementById("1").addEventListener("click", function(){
+            numberButton(document.getElementById("1").innerText);
+        });
+
+
+        document.getElementById("2").addEventListener("click", function(){
+            numberButton(document.getElementById("2").innerText);
+        });
+
+
+        document.getElementById("3").addEventListener("click", function(){
+            numberButton(document.getElementById("3").innerText);
+        });
+
+
+        document.getElementById("4").addEventListener("click", function(){
+            numberButton(document.getElementById("4").innerText);
+        });
+
+
+        document.getElementById("5").addEventListener("click", function(){
+            numberButton(document.getElementById("5").innerText);
+        });
+
+
+        document.getElementById("6").addEventListener("click", function(){
+            numberButton(document.getElementById("6").innerText);
+        });
+        
+        
+        document.getElementById("7").addEventListener("click", function(){
+            numberButton(document.getElementById("7").innerText);
+        });
+
+
+        document.getElementById("8").addEventListener("click", function(){
+            numberButton(document.getElementById("8").innerText);
+        });
+
+        document.getElementById("9").addEventListener("click", function(){
+            numberButton(document.getElementById("9").innerText);
+        });
+
+
+        document.getElementById("0").addEventListener("click", function(){
+            numberButton(document.getElementById("0").innerText);
+        });
+
+
+        document.getElementById("c").addEventListener("click", function(){
+            calc_display = "";
+            document.getElementById("calc-display").value = calc_display ;
+        });
+
+        document.getElementById("<").addEventListener("click" , function(){
+            
+            calc_display = parseInt(calc_display);
+
+            if(calc_display > 0){
+                calc_display = parseInt(calc_display/10);
+                document.getElementById("calc-display").value = calc_display;
+            }
+        });
+
+
+        //submit Button 
+        document.getElementById("submitButton").addEventListener("click", function(){
+            if(pin == calc_display){
+                document.getElementById("rightPin").style.display = "block";
+                document.getElementById("wrongPin").style.display = "none";
+                document.getElementById("pin-display").value = " ";
+                document.getElementById("try").innerText = "success!";
+                document.getElementById("try").style.color = "green";
+
+            }
+            else{
+                document.getElementById("wrongPin").style.display = "block";
+                document.getElementById("rightPin").style.display = "none";
+                calc_display = "";
+                document.getElementById("calc-display").value = calc_display;
+
+                try_left--;
+                if(try_left == 0){
+                    document.getElementById("submitButton").style.display = "none";
+                    document.getElementById("try").innerText = "fail!";
+                }
+                else{
+                    document.getElementById("try").innerText = try_left+" try left";
+                }
+            }
+            calc_display = "";
+            document.getElementById("calc-display").value = calc_display;
+        });
+
+        
+
+
+    </script>
+</body>
+</html>
